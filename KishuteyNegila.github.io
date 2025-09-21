@@ -236,7 +236,7 @@
         const showSuccessMessage = () => {
             formContainer.innerHTML = `
                 <div class="text-center p-8">
-                    <svg class="w-16 h-16 mx-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <svg class="w-16 h-16 mx-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <h2 class="text-2xl font-bold mt-4 text-gray-800">ההזמנה נשלחה בהצלחה!</h2>
                     <p class="mt-2 text-gray-600">תודה רבה שבחרתם בקישוטי נגילה.</p>
                     <p class="mt-1 text-gray-600">ניצור קשר בהקדם. אפשר לסגור את החלון.</p>
