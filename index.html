@@ -316,7 +316,7 @@
             if (success) {
                 const totalPrice = totalPriceSpan.textContent.substring(1);
                 if (parseInt(totalPrice) > 0) {
-                    window.open(`https://www.bitpay.co.il/go/bit/?to=0545906461&amount=${totalPrice}`, '_blank');
+                    window.open(`https://bitpay.co.il/app/payment?phone=0545906461&amount=${totalPrice}&note=תשלום לקישוטי נגילה`, '_blank');
                 }
                 showSuccessMessage();
             }
