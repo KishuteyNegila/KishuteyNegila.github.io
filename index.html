@@ -106,11 +106,15 @@
                     </div>
 
                     <div id="form-actions" class="flex flex-col gap-4 mt-6">
-                         <button type="button" id="paybox-btn" class="btn bg-green-500 hover:bg-green-600">תשלום בפייבוקס ושליחת הזמנה</button>
-                         <button type="button" id="bit-btn" class="btn bg-blue-500 hover:bg-blue-600">תשלום בביט ושליחת הזמנה</button>
-                         <button type="submit" id="submit-btn" class="btn bg-gray-600 hover:bg-gray-700">שליחת הזמנה (תשלום באיסוף)</button>
+                         <button type="button" id="paybox-btn" class="btn bg-green-500 hover:bg-green-600">המשך לתשלום בפייבוקס</button>
+                         <button type="button" id="bit-btn" class="btn bg-blue-500 hover:bg-blue-600">המשך לתשלום בביט</button>
+                         <button type="button" id="submit-btn" class="btn bg-gray-600 hover:bg-gray-700">שלח הזמנה (תשלום באיסוף)</button>
                     </div>
                 </form>
+                 <div id="form-success-message" class="hidden text-center p-4 mt-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <p class="font-bold">ההזמנה מוכנה לשליחה!</p>
+                    <p>נא ללחוץ "שלח" בחלון החדש שנפתח כדי לאשר סופית.</p>
+                </div>
             </div>
 
             <footer class="text-center mt-8 text-gray-600">
@@ -121,7 +125,7 @@
 
     <script>
         // --------- פרטי טופס הגוגל שלך - מעודכן! ---------
-        const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfGJKTSKrUhpCiCGMqliH--nNeXsNDrEpj_YapoZiMJeOReJw/formResponse";
+        const GOOGLE_FORM_URL_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSfGJKTSKrUhpCiCGMqliH--nNeXsNDrEpj_YapoZiMJeOReJw/viewform?usp=pp_url";
 
         const GOOGLE_FORM_ENTRIES = {
             fullName: "entry.81589714",
@@ -154,7 +158,7 @@
         const totalItemsSpan = document.getElementById('total-items');
         const totalPriceSpan = document.getElementById('total-price');
         const orderForm = document.getElementById('order-form');
-        const formContainer = orderForm.parentElement;
+        const successMessage = document.getElementById('form-success-message');
 
         products.forEach((product, index) => {
             const card = document.createElement('div');
@@ -233,18 +237,7 @@
             input.addEventListener('input', calculateTotal);
         });
         
-        const showSuccessMessage = () => {
-            formContainer.innerHTML = `
-                <div class="text-center p-8">
-                    <svg class="w-16 h-16 mx-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <h2 class="text-2xl font-bold mt-4 text-gray-800">ההזמנה נשלחה בהצלחה!</h2>
-                    <p class="mt-2 text-gray-600">תודה רבה שבחרתם בקישוטי נגילה.</p>
-                    <p class="mt-1 text-gray-600">ניצור קשר בהקדם. אפשר לסגור את החלון.</p>
-                </div>
-            `;
-        };
-
-        const handleFormSubmit = async () => {
+        const handleFormSubmit = () => {
              if (!orderForm.checkValidity()) {
                 orderForm.querySelector(':invalid')?.focus();
                 const feedbackDiv = document.createElement('div');
@@ -252,7 +245,7 @@
                 feedbackDiv.className = "text-red-500 text-center mb-4";
                 orderForm.prepend(feedbackDiv);
                 setTimeout(() => feedbackDiv.remove(), 3000);
-                return false;
+                return null;
             }
 
             if (parseInt(totalItemsSpan.textContent) === 0) {
@@ -261,66 +254,61 @@
                 feedbackDiv.className = "text-red-500 text-center mb-4";
                 orderForm.prepend(feedbackDiv);
                 setTimeout(() => feedbackDiv.remove(), 3000);
-                return false;
+                return null;
             }
-
-            document.querySelectorAll('#form-actions button').forEach(b => b.disabled = true);
-            
-            const formData = new FormData();
-            formData.append(GOOGLE_FORM_ENTRIES.fullName, document.getElementById('full-name').value);
-            formData.append(GOOGLE_FORM_ENTRIES.phone, document.getElementById('phone').value);
-            formData.append(GOOGLE_FORM_ENTRIES.pickupPoint, document.getElementById('pickup-point').value);
-            formData.append(GOOGLE_FORM_ENTRIES.paymentMethod, document.getElementById('payment-method').value);
-            formData.append(GOOGLE_FORM_ENTRIES.notes, document.getElementById('notes').value);
             
             let orderDetailsText = "";
             products.forEach((p, index) => {
                 const quantity = parseInt(document.querySelector(`input[data-index="${index}"]`).value) || 0;
                 if (quantity > 0) orderDetailsText += `- ${p.name}: ${quantity} יחידות\n`;
             });
-            formData.append(GOOGLE_FORM_ENTRIES.orderDetails, orderDetailsText);
-            formData.append(GOOGLE_FORM_ENTRIES.totalPrice, totalPriceSpan.textContent);
 
-            try {
-                await fetch(GOOGLE_FORM_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-                return true;
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                const feedbackDiv = document.createElement('div');
-                feedbackDiv.textContent = "אירעה שגיאה בשליחת ההזמנה. אנא נסה/י שוב.";
-                feedbackDiv.className = "text-red-500 text-center mb-4";
-                orderForm.prepend(feedbackDiv);
-                document.querySelectorAll('#form-actions button').forEach(b => b.disabled = false);
-                return false;
-            }
+            const fullName = document.getElementById('full-name').value;
+            const phone = document.getElementById('phone').value;
+            const pickupPoint = document.getElementById('pickup-point').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+            const notes = document.getElementById('notes').value;
+            const totalPrice = totalPriceSpan.textContent;
+
+            let prefilledUrl = GOOGLE_FORM_URL_BASE;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.fullName}=${encodeURIComponent(fullName)}`;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.phone}=${encodeURIComponent(phone)}`;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.pickupPoint}=${encodeURIComponent(pickupPoint)}`;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.paymentMethod}=${encodeURIComponent(paymentMethod)}`;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.notes}=${encodeURIComponent(notes)}`;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.orderDetails}=${encodeURIComponent(orderDetailsText)}`;
+            prefilledUrl += `&${GOOGLE_FORM_ENTRIES.totalPrice}=${encodeURIComponent(totalPrice)}`;
+
+            return prefilledUrl;
         };
 
-        orderForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const success = await handleFormSubmit();
-            if (success) showSuccessMessage();
-        });
-
-        document.getElementById('paybox-btn').addEventListener('click', async () => {
-            document.getElementById('payment-method').value = "שולם בפייבוקס";
-            const success = await handleFormSubmit();
-            if (success) {
-                window.open("https://links.payboxapp.com/pCOpNiinPWb", '_blank');
-                showSuccessMessage();
-            }
-        });
-
-        document.getElementById('bit-btn').addEventListener('click', async () => {
-            document.getElementById('payment-method').value = "שולם בביט";
-            const success = await handleFormSubmit();
-            if (success) {
-                const totalPrice = totalPriceSpan.textContent.substring(1);
-                if (parseInt(totalPrice) > 0) {
-                    window.open(`https://bitpay.co.il/app/payment?phone=0545906461&amount=${totalPrice}&note=תשלום לקישוטי נגילה`, '_blank');
+        const setupSubmitButton = (buttonId, paymentUrlGenerator) => {
+            document.getElementById(buttonId).addEventListener('click', () => {
+                const prefilledUrl = handleFormSubmit();
+                if (prefilledUrl) {
+                    window.open(prefilledUrl, '_blank');
+                    if (paymentUrlGenerator) {
+                        const paymentUrl = paymentUrlGenerator();
+                        if(paymentUrl) window.open(paymentUrl, '_blank');
+                    }
+                    successMessage.classList.remove('hidden');
+                    document.getElementById('form-actions').classList.add('hidden');
                 }
-                showSuccessMessage();
-            }
+            });
+        };
+
+        setupSubmitButton('submit-btn');
+
+        setupSubmitButton('paybox-btn', () => "https://links.payboxapp.com/pCOpNiinPWb");
+        
+        setupSubmitButton('bit-btn', () => {
+             const totalPrice = totalPriceSpan.textContent.substring(1);
+             if (parseInt(totalPrice) > 0) {
+                 return `https://bitpay.co.il/app/payment?phone=0545906461&amount=${totalPrice}&note=תשלום לקישוטי נגילה`;
+             }
+             return null;
         });
+
     </script>
 </body>
 </html>
