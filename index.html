@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קישוטי נגילה</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap');
+        @font-face {
+            font-family: 'Rubik One';
+            src: url('https://fonts.gstatic.com/s/rubikone/v16/Jz1iR-vj_YseJ1x-mRzH8j1W.woff2') format('woff2');
+        }
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f7f3e9;
+            color: #4b3832;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #dcd4c6;
+        }
+        .btn-primary {
+            background-color: #a0522d;
+        }
+        .btn-primary:hover {
+            background-color: #8c4626;
+        }
+        .page-title {
+            font-family: 'Rubik One', sans-serif;
+            color: #5d251d;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="container mx-auto">
+        <header class="text-center mb-8">
+            <div class="mb-4">
+                <img src="https://lh3.googleusercontent.com/d/13ILgLWYi6uVe8yXv88sb73BSdBrwQ2dY" alt="קישוטי עד סטודיו נגילה" class="mx-auto w-full max-w-lg rounded-lg shadow-lg">
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold page-title mb-2">קישוטי עד סטודיו נגילה</h1>
+            <p class="text-lg mt-2 text-6b5d5b">קישוטים לסוכה בתחושה של בית :)</p>
+            <div class="flex items-center justify-center mt-4 text-center">
+                <p class="text-lg sm:text-xl font-bold ml-2">בשיתוף שרעבי 4 מינים</p>
+                <img src="https://lh3.googleusercontent.com/d/1gYjqfKTxW62yMlKA7IB9c_2vpXYi91-P" alt="לוגו אוריין שרעבי" class="h-16 w-16 sm:h-20 sm:w-20 object-contain">
+            </div>
+        </header>
+
+        <main>
+            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Products will be generated here -->
+            </div>
+
+            <div class="card p-6 rounded-lg shadow-lg mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-a0522d">סיכום הזמנה</h2>
+                <div id="order-summary" class="text-lg">
+                    <p>
+                        <span class="font-bold">סה"כ פריטים: </span>
+                        <span id="total-items">0</span>
+                    </p>
+                    <p class="mt-2">
+                        <span class="font-bold">סה"כ לתשלום: </span>
+                        <span id="total-price" class="font-bold text-xl">₪0</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 text-a0522d">פרטי יצירת קשר</h2>
+                <form id="order-form" novalidate>
+                    <div class="mb-4">
+                        <label for="full-name" class="block text-sm font-medium text-gray-700">שם מלא:</label>
+                        <input type="text" id="full-name" name="full-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="phone" class="block text-sm font-medium text-gray-700">מספר טלפון:</label>
+                        <input type="tel" id="phone" name="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="pickup-point" class="block text-sm font-medium text-gray-700">בחר נקודת איסוף:</label>
+                        <select id="pickup-point" name="pickup-point" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+                            <option value="">-- בחר נקודה --</option>
+                            <option value="יד בנימין">יד בנימין - אולם רימון</option>
+                            <option value="גוש טלמונים">גוש טלמונים - שוקא- נריה</option>
+                            <option value="שילה">שילה - הכהנים חומרי בניין</option>
+                            <option value="כפר עציון">כפר עציון - ליד מאפיית טלמי</option>
+                            <option value="מצפה יריחו">מצפה יריחו - אולם ביה"כ יעקב יגל</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="payment-method" class="block text-sm font-medium text-gray-700">אופן התשלום:</label>
+                        <select id="payment-method" name="payment-method" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2">
+                            <option value="">-- בחר אופן תשלום --</option>
+                            <option value="שולם בפייבוקס">שולם בפייבוקס</option>
+                            <option value="שולם בביט">שולם בביט</option>
+                            <option value="תשלום באיסוף">תשלום באיסוף</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="notes" class="block text-sm font-medium text-gray-700">הערות:</label>
+                        <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2"></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                        <a id="paybox-link" href="https://links.payboxapp.com/pCOpNiinPWb" target="_blank" class="w-full text-center py-3 rounded-lg shadow-md font-bold text-white transition-colors duration-300 bg-green-500 hover:bg-green-600">
+                            תשלום בפייבוקס
+                        </a>
+                        <a id="bit-link" href="#" target="_blank" class="w-full text-center py-3 rounded-lg shadow-md font-bold text-white transition-colors duration-300 bg-blue-500 hover:bg-blue-600">
+                            תשלום בביט
+                        </a>
+                        <button type="submit" class="w-full py-3 rounded-lg shadow-md font-bold text-white transition-colors duration-300 bg-a0522d hover:bg-8c4626">
+                            שלח הזמנה
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <footer class="text-center mt-8 text-gray-600">
+                <p>לפרטים נוספים: אוריין שרעבי: <a href="tel:0545906461" class="text-blue-500 hover:underline">054-590-6461</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Define your products here with prices, images, and sales details
+        const products = [
+            {
+                name: "אור חדש | A3 (42*29.7) לרוחב",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1g5O1SD_adhCbNBHIU4-XNdU0DlbhIPgx",
+                promo: true
+            },
+            {
+                name: "אור חדש 50*70",
+                price: 150,
+                image: "https://lh3.googleusercontent.com/d/1g5O1SD_adhCbNBHIU4-XNdU0DlbhIPgx",
+                promo: false
+            },
+            {
+                name: "אור חדש 100*150",
+                price: 250,
+                image: "https://lh3.googleusercontent.com/d/1g5O1SD_adhCbNBHIU4-XNdU0DlbhIPgx",
+                promo: false
+            },
+            {
+                name: "סוכת דוד הנופלת | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/11e_WYv2FyyrUrfRDRVQxn97PNYb53bH8",
+                promo: true
+            },
+            {
+                name: "אור גנוז | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1w9FFAen7pSxw90b-p__i5kM2DUAWbnSM",
+                promo: true
+            },
+            {
+                name: "כל ישראל | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1BqQcFUmL-5Ly3BKixFClJUgnIYFiural",
+                promo: true
+            },
+            {
+                name: "הגלה נא | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1fFVHpWDch6ZF0klQW-JSCkawSY9-IU4d",
+                promo: true
+            },
+            {
+                name: "הרחמן אושפיזין | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1PZF7PnD5I34xtaEuk6qvknlsvtpSiESI",
+                promo: true
+            },
+            {
+                name: "יבנה המקדש | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1vX0LZPLlJq8Bc-JoN2psTsBfaeLOwhPk",
+                promo: true
+            },
+            {
+                name: "סוכה ולולב | A3 (42*29.7) לרוחב",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1cLrLxxiC4-DCkB1ND3sdd1ctHmVU7LcA",
+                promo: true
+            },
+            {
+                name: "עוד נתראה | A3 (42*29.7) לרוחב",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1LGulzK73yvqgT8pYGC4vs9xW9_rVr27r",
+                promo: true
+            },
+            {
+                name: "מדרש שפת אמת | A3 (42*29.7) לאורך",
+                price: 60,
+                image: "https://lh3.googleusercontent.com/d/1b81OPRvGQCaSDJ7Hz9oztsUGdEFehSPB",
+                promo: true
+            }
+        ];
+
+        const productList = document.getElementById('product-list');
+        const totalItemsSpan = document.getElementById('total-items');
+        const totalPriceSpan = document.getElementById('total-price');
+        const orderForm = document.getElementById('order-form');
+        const formContainer = orderForm.parentElement;
+
+        // Render products dynamically
+        products.forEach((product, index) => {
+            const card = document.createElement('div');
+            card.className = "card rounded-xl overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 p-4";
+            
+            const imageContainer = document.createElement('div');
+            imageContainer.className = "w-full h-48 sm:h-64 mb-4 rounded-lg overflow-hidden";
+            const image = document.createElement('img');
+            image.src = product.image;
+            image.alt = product.name;
+            image.className = "w-full h-full object-cover";
+            imageContainer.appendChild(image);
+            card.appendChild(imageContainer);
+
+            const content = document.createElement('div');
+            content.className = "text-center";
+            
+            const name = document.createElement('h3');
+            name.className = "text-lg font-bold mb-1 text-4b3832";
+            name.textContent = product.name;
+            content.appendChild(name);
+
+            const price = document.createElement('p');
+            price.className = "text-md font-semibold text-a0522d";
+            price.textContent = `מחיר: ₪${product.price}`;
+            content.appendChild(price);
+            
+            if (product.promo) {
+                const promoText = document.createElement('p');
+                promoText.className = "text-sm text-green-600 mt-1";
+                promoText.textContent = "מבצע: 2 ב-110₪, 3 ב-160₪, 4 ב-200₪";
+                content.appendChild(promoText);
+            }
+
+            const quantityContainer = document.createElement('div');
+            quantityContainer.className = "mt-4 flex items-center justify-center";
+            const quantityLabel = document.createElement('label');
+            quantityLabel.className = "text-sm ml-2";
+            quantityLabel.textContent = "כמות:";
+            quantityContainer.appendChild(quantityLabel);
+            
+            const quantityInput = document.createElement('input');
+            quantityInput.type = "number";
+            quantityInput.value = 0;
+            quantityInput.min = 0;
+            quantityInput.max = 5;
+            quantityInput.dataset.index = index;
+            quantityInput.className = "w-16 text-center rounded-md border-gray-300 p-1";
+            quantityContainer.appendChild(quantityInput);
+            
+            content.appendChild(quantityContainer);
+            card.appendChild(content);
+            productList.appendChild(card);
+        });
+
+        // Function to calculate total price
+        function calculateTotal() {
+            let totalItems = 0;
+            let totalPrice = 0;
+            const quantities = document.querySelectorAll('input[type="number"]');
+
+            quantities.forEach(input => {
+                const index = input.dataset.index;
+                const quantity = parseInt(input.value);
+                totalItems += quantity;
+
+                const product = products[index];
+                if (product.promo) {
+                    if (quantity === 1) {
+                        totalPrice += 60;
+                    } else if (quantity === 2) {
+                        totalPrice += 110;
+                    } else if (quantity === 3) {
+                        totalPrice += 160;
+                    } else if (quantity >= 4) {
+                        totalPrice += 200 + (quantity - 4) * 50;
+                    }
+                } else {
+                    totalPrice += quantity * product.price;
+                }
+            });
+
+            totalItemsSpan.textContent = totalItems;
+            totalPriceSpan.textContent = `₪${totalPrice}`;
+        }
+
+        // Add event listeners for quantity changes
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('change', calculateTotal);
+            input.addEventListener('input', calculateTotal);
+        });
+
+        // Handle form submission to Google Forms
+        orderForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const submitButton = orderForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            
+            // Basic form validation
+            if (!orderForm.checkValidity()) {
+                const invalidField = orderForm.querySelector(':invalid');
+                invalidField.focus();
+                 const feedbackDiv = document.createElement('div');
+                feedbackDiv.textContent = "נא למלא את כל שדות החובה.";
+                feedbackDiv.className = "text-red-500 text-center mb-4";
+                orderForm.prepend(feedbackDiv);
+                setTimeout(() => feedbackDiv.remove(), 3000);
+                return;
+            }
+
+            const totalItems = parseInt(document.getElementById('total-items').textContent);
+            if (totalItems === 0) {
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.textContent = "אנא בחר/י לפחות מוצר אחד לפני שליחת ההזמנה.";
+                feedbackDiv.className = "text-red-500 text-center mb-4";
+                orderForm.prepend(feedbackDiv);
+                setTimeout(() => feedbackDiv.remove(), 3000);
+                return;
+            }
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'שולח...';
+
+            const formData = new FormData();
+            formData.append('entry.1981622329', document.getElementById('full-name').value);
+            formData.append('entry.1018873836', document.getElementById('phone').value);
+            formData.append('entry.888358217', document.getElementById('pickup-point').value);
+            formData.append('entry.1118123281', document.getElementById('payment-method').value);
+            formData.append('entry.1018861937', document.getElementById('notes').value);
+            
+            let orderDetailsText = "";
+            const quantities = document.querySelectorAll('input[type="number"]');
+            quantities.forEach(input => {
+                const index = input.dataset.index;
+                const quantity = parseInt(input.value);
+                if (quantity > 0) {
+                    orderDetailsText += `- ${products[index].name}: ${quantity} יחידות\n`;
+                }
+            });
+            formData.append('entry.1378170258', orderDetailsText);
+            
+            const totalPriceText = document.getElementById('total-price').textContent;
+            formData.append('entry.2078028741', totalPriceText);
+
+            const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdJqfQvLgN4N4k-kM4hV_l4R1kZ8W3Z-uFj4Q8n7wH6T2tJ8A/formResponse";
+
+            try {
+                await fetch(formUrl, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                });
+
+                formContainer.innerHTML = `
+                    <div class="text-center p-8">
+                        <svg class="w-16 h-16 mx-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h2 class="text-2xl font-bold mt-4 text-gray-800">ההזמנה נשלחה בהצלחה!</h2>
+                        <p class="mt-2 text-gray-600">תודה רבה שבחרתם בקישוטי נגילה.</p>
+                        <p class="mt-1 text-gray-600">ניצור קשר בהקדם. אפשר לסגור את החלון.</p>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.textContent = "אירעה שגיאה בשליחת ההזמנה. אנא נסה/י שוב או פנה/י אלינו טלפונית.";
+                feedbackDiv.className = "text-red-500 text-center mb-4";
+                orderForm.prepend(feedbackDiv);
+                
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            }
+        });
+
+        // Update the bit link with the calculated price
+        const bitLink = document.getElementById('bit-link');
+        bitLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            const totalPrice = document.getElementById('total-price').textContent.substring(1);
+            if (parseInt(totalPrice) > 0) {
+                 const phoneNumber = "0545906461";
+                 window.open(`https://www.bitpay.co.il/go/bit/?to=${phoneNumber}&amount=${totalPrice}`, '_blank');
+            }
+        });
+    </script>
+</body>
+</html>
+
